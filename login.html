@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Log in | Migrate</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="site-header"><div class="container">
+    <a class="logo" href="index.html">Migrate</a>
+    <nav class="nav" id="nav" aria-label="Main"></nav>
+  </div></header>
+
+  <main class="container"><div class="auth-card">
+    <h2>Welcome back</h2>
+    <p class="meta" style="margin-bottom:1.5rem">Log in to see your saved rentals and list a house.</p>
+    <form id="login-form">
+      <div class="form-group"><label for="l-email">Email address</label><input type="email" id="l-email" autocomplete="email" required></div>
+      <div class="form-group"><label for="l-password">Password</label><input type="password" id="l-password" autocomplete="current-password" required></div>
+      <button type="submit" class="btn" style="width:100%">Log in</button>
+      <p id="auth-msg" class="msg" aria-live="polite"></p>
+    </form>
+    <p style="font-size:.95rem">New here? <a href="signup.html">Create an account</a></p>
+  </div></main>
+  <footer class="site-footer"><div class="container">Migrate. Rentals for students of Presbyterian University, Thogoto.</div></footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabaseClient.js"></script>
+  <script src="js/nav.js"></script>
+  <script>
+    const next = new URLSearchParams(location.search).get("next") || "index.html";
+    document.getElementById("login-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const msg = document.getElementById("auth-msg"); msg.className = "msg"; msg.textContent = "Logging in...";
+      const { error } = await db.auth.signInWithPassword({ email: document.getElementById("l-email").value.trim(), password: document.getElementById("l-password").value });
+      if (error) { msg.className = "msg bad"; msg.textContent = error.message; return; }
+      msg.className = "msg ok"; msg.textContent = "Logged in. Redirecting...";
+      setTimeout(() => location.href = next, 600);
+    });
+  </script>
+</body>
+</html>

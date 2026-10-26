@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Saved rentals | Migrate</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="site-header"><div class="container">
+    <a class="logo" href="index.html">Migrate</a>
+    <nav class="nav" id="nav" aria-label="Main"></nav>
+  </div></header>
+
+  <main class="container">
+    <div class="page-head">
+      <h1 style="font-size:clamp(1.8rem,4vw,2.6rem)">My saved rentals</h1>
+      <p class="meta" id="fav-count" aria-live="polite">Loading saved listings...</p>
+    </div>
+    <div class="grid" id="fav-grid"></div>
+  </main>
+  <footer class="site-footer"><div class="container">Migrate. Rentals for students of Presbyterian University, Thogoto.</div></footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabaseClient.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/favorites.js"></script>
+</body>
+</html>

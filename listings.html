@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rentals near campus | Migrate</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
+</head>
+<body>
+  <header class="site-header"><div class="container">
+    <a class="logo" href="index.html">Migrate</a>
+    <nav class="nav" id="nav" aria-label="Main"></nav>
+  </div></header>
+
+  <main class="container">
+    <div class="page-head">
+      <h1 style="font-size:clamp(1.8rem,4vw,2.6rem)">Rentals near campus</h1>
+      <p class="meta" id="result-count" aria-live="polite">Loading listings...</p>
+    </div>
+    <form class="filters" id="filters">
+      <label>Area <select id="f-area"><option value="">All areas</option></select></label>
+      <label>Type <select id="f-type"><option value="">Any type</option></select></label>
+      <label>Max rent <input id="f-max" type="number" min="0" step="500" placeholder="KES"></label>
+      <label>Sort <select id="f-sort"><option value="new">Newest</option><option value="low">Rent: low to high</option><option value="high">Rent: high to low</option></select></label>
+      <button type="button" id="toggle-map-btn" class="btn btn-outline">View on map</button>
+    </form>
+    <div id="listings-map" style="display:none"></div>
+    <div class="grid" id="grid"></div>
+  </main>
+  <footer class="site-footer"><div class="container">Migrate. Rentals for students of Presbyterian University, Thogoto.</div></footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabaseClient.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="js/listings.js"></script>
+</body>
+</html>

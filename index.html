@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Migrate | Find a place to rent near campus</title>
+  <meta name="description" content="Student-friendly rentals near Presbyterian University, Thogoto, Kikuyu.">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="site-header"><div class="container">
+    <a class="logo" href="index.html">Migrate</a>
+    <nav class="nav" id="nav" aria-label="Main"></nav>
+  </div></header>
+  <main>
+    <section class="hero"><div class="container">
+      <div>
+        <span class="pill">For comrades, by comrades</span>
+        <h1>Find your next digs near campus.</h1>
+        <p>Migrate lists vacant bedsitters, shared rooms and apartments around Thogoto and Kikuyu. Real rent in KES, direct landlord contacts, no middlemen.</p>
+        <a class="btn btn-lg" href="listings.html">Browse vacant houses &rarr;</a>
+      </div>
+      <div class="hero-photo" role="img" aria-label="Furnished studio room"></div>
+    </div></section>
+
+    <div class="container finder">
+      <form class="search-bar" id="search-form" role="search">
+        <label>Area <select id="area"><option value="">Anywhere near campus</option></select></label>
+        <label>Type <select id="type"><option value="">Any type</option></select></label>
+        <label>Max rent (KES/month) <input id="max-rent" type="number" min="0" step="500" placeholder="e.g. 8000"></label>
+        <button class="btn" type="submit">Search</button>
+      </form>
+      <p class="hero-count" id="hero-count" aria-live="polite"></p>
+    </div>
+
+    <section class="section"><div class="container feats">
+      <div class="feat"><i><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></i><h3>Search by area</h3><p>Filter by area, room type and budget. No more walking gate to gate.</p></div>
+      <div class="feat"><i><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></i><h3>Real vacancies</h3><p>Every listing shows current availability, the rent and the landlord's own number.</p></div>
+      <div class="feat"><i><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10h18M16 14h2"/></svg></i><h3>Student budgets</h3><p>From shared rooms to full apartments, with something for every pocket.</p></div>
+    </div></section>
+
+    <section class="section band"><div class="container">
+      <div class="section-head"><div><h2>Fresh on Migrate</h2><p>The newest places near campus. More photos are on the way.</p></div><a class="btn btn-outline" href="listings.html">See all houses</a></div>
+      <div class="grid" id="featured"></div>
+    </div></section>
+  </main>
+  <footer class="site-footer"><div class="container">Migrate. Rentals for students of Presbyterian University, Thogoto.</div></footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabaseClient.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/placeholders.js"></script>
+  <script>
+    const areaSel = document.getElementById("area"), typeSel = document.getElementById("type"), feat = document.getElementById("featured");
+    Object.entries(PROPERTY_TYPES).forEach(([v, l]) => typeSel.insertAdjacentHTML("beforeend", `<option value="${v}">${l}</option>`));
+    const realCard = (p) => `<article class="card"><div class="card-img" style="background-image:url('${encodeURI(p.property_images?.[0]?.image_url || "")}')"></div>
+      <div class="card-body"><div class="price">${formatKES(p.rent)} <small>/ month</small></div><h3>${esc(p.title)}</h3>
+      <div class="meta">${esc(p.area || p.location || "")}</div><div><span class="tag">${esc(PROPERTY_TYPES[p.property_type] || "Rental")}</span></div>
+      <a class="btn" href="property.html?id=${p.id}">View details</a></div></article>`;
+    async function load() {
+      const { data, error } = await db.from("properties").select("id,title,rent,area,location,property_type,property_images(image_url)").eq("status", "Available").order("created_at", { ascending: false });
+      const rows = error ? [] : data;
+      [...new Set(rows.map(p => p.area).filter(Boolean))].sort().forEach(a => areaSel.insertAdjacentHTML("beforeend", `<option value="${esc(a)}">${esc(a)}</option>`));
+      document.getElementById("hero-count").textContent = rows.length ? `${rows.length} ${rows.length === 1 ? "place is" : "places are"} available right now.` : "New listings are coming soon.";
+      const real = rows.filter(p => p.property_images?.length).slice(0, 10);
+      feat.innerHTML = real.map(realCard).join("") + SLOTS.slice(real.length).map((s, i) => placeholderCard(s, real.length + i)).join("");
+    }
+    document.getElementById("search-form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const p = new URLSearchParams();
+      if (areaSel.value) p.set("area", areaSel.value);
+      if (typeSel.value) p.set("type", typeSel.value);
+      const max = document.getElementById("max-rent").value; if (max) p.set("max", max);
+      location.href = "listings.html" + (p.toString() ? "?" + p : "");
+    });
+    load();
+  </script>
+</body>
+</html>

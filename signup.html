@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign up | Migrate</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="site-header"><div class="container">
+    <a class="logo" href="index.html">Migrate</a>
+    <nav class="nav" id="nav" aria-label="Main"></nav>
+  </div></header>
+
+  <main class="container"><div class="auth-card">
+    <h2>Create an account</h2>
+    <p class="meta" style="margin-bottom:1.5rem">Join Migrate as a student or a landlord.</p>
+    <form id="signup-form">
+      <div class="form-group"><label for="s-name">Full name</label><input id="s-name" autocomplete="name" required></div>
+      <div class="form-group"><label for="s-email">Email address</label><input type="email" id="s-email" autocomplete="email" required></div>
+      <div class="row2">
+        <div class="form-group"><label for="s-phone">Phone number</label><input type="tel" id="s-phone" placeholder="0712345678" required></div>
+        <div class="form-group"><label for="s-role">I am a</label><select id="s-role"><option value="student">Student</option><option value="landlord">Landlord</option></select></div>
+      </div>
+      <div class="form-group"><label for="s-uni">University / campus</label><input id="s-uni" value="Presbyterian University" required></div>
+      <div class="form-group"><label for="s-password">Password</label><input type="password" id="s-password" minlength="6" autocomplete="new-password" placeholder="At least 6 characters" required></div>
+      <button type="submit" class="btn" style="width:100%">Create account</button>
+      <p id="auth-msg" class="msg" aria-live="polite"></p>
+    </form>
+    <p style="font-size:.95rem">Already have an account? <a href="login.html">Log in</a></p>
+  </div></main>
+  <footer class="site-footer"><div class="container">Migrate. Rentals for students of Presbyterian University, Thogoto.</div></footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabaseClient.js"></script>
+  <script src="js/nav.js"></script>
+  <script>
+    document.getElementById("signup-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const msg = document.getElementById("auth-msg"); msg.className = "msg"; msg.textContent = "Creating account...";
+      const v = (id) => document.getElementById(id).value.trim();
+      const profile = { full_name: v("s-name"), phone: v("s-phone"), university: v("s-uni"), role: document.getElementById("s-role").value };
+      const { data, error } = await db.auth.signUp({ email: v("s-email"), password: document.getElementById("s-password").value, options: { data: profile } });
+      if (error) { msg.className = "msg bad"; msg.textContent = error.message; return; }
+      // The database trigger creates the profile from the metadata above, so nothing else to insert.
+      if (data.session) {
+        msg.className = "msg ok"; msg.textContent = "Account created. Redirecting...";
+        setTimeout(() => location.href = "index.html", 1000);
+      } else {
+        msg.className = "msg ok"; msg.textContent = "Account created. Check your email to confirm it, then log in.";
+      }
+    });
+  </script>
+</body>
+</html>
