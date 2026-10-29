@@ -3,77 +3,86 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Migrate | Find a place to rent near campus</title>
-  <meta name="description" content="Student-friendly rentals near Presbyterian University, Thogoto, Kikuyu.">
+  <title>Migrate | Find your next digs near campus</title>
+  <meta name="description" content="Find vacant bedsitters, single rooms and apartments near Presbyterian University of East Africa in Thogoto and Kikuyu. Real rent in KES and direct landlord contacts.">
+  <link rel="canonical" href="index.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Migrate | Find your next digs near campus">
+  <meta property="og:description" content="Vacant houses near Presbyterian University of East Africa, Thogoto and Kikuyu.">
+  <meta property="og:image" content="images/hero.jpg">
+  <link rel="preload" as="image" href="images/hero.jpg" fetchpriority="high">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header"><div class="container">
     <a class="logo" href="index.html">Migrate</a>
     <nav class="nav" id="nav" aria-label="Main"></nav>
   </div></header>
-  <main>
+
+  <main id="main">
     <section class="hero"><div class="container">
       <div>
-        <span class="pill">For comrades, by comrades</span>
+        <span class="pill">Thogoto &amp; Kikuyu</span>
         <h1>Find your next digs near campus.</h1>
-        <p>Migrate lists vacant bedsitters, shared rooms and apartments around Thogoto and Kikuyu. Real rent in KES, direct landlord contacts, no middlemen.</p>
-        <a class="btn btn-lg" href="listings.html">Browse vacant houses &rarr;</a>
+        <p>Migrate lists vacant houses around Presbyterian University of East Africa. Compare rent in KES, see photos and the location on a map, and contact the landlord directly.</p>
+        <a class="btn btn-lg" href="listings.html">Browse available houses &rarr;</a>
       </div>
-      <div class="hero-photo" role="img" aria-label="Furnished studio room"></div>
+      <img class="hero-photo" src="images/hero.jpg" alt="A furnished room" width="736" height="981" fetchpriority="high">
     </div></section>
 
     <div class="container finder">
-      <form class="search-bar" id="search-form" role="search">
-        <label>Area <select id="area"><option value="">Anywhere near campus</option></select></label>
-        <label>Type <select id="type"><option value="">Any type</option></select></label>
-        <label>Max rent (KES/month) <input id="max-rent" type="number" min="0" step="500" placeholder="e.g. 8000"></label>
+      <form class="search-bar" id="search-form" role="search" aria-label="Find a house">
+        <label>Search<input id="q" type="search" placeholder="Area or keyword" autocomplete="off"></label>
+        <label>House type<select id="type"><option value="">Any type</option></select></label>
+        <label>Max rent (KES / month)<input id="max-rent" type="number" inputmode="numeric" min="0" step="500" placeholder="e.g. 8000"></label>
         <button class="btn" type="submit">Search</button>
       </form>
-      <p class="hero-count" id="hero-count" aria-live="polite"></p>
     </div>
 
-    <section class="section"><div class="container feats">
-      <div class="feat"><i><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></i><h3>Search by area</h3><p>Filter by area, room type and budget. No more walking gate to gate.</p></div>
-      <div class="feat"><i><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></i><h3>Real vacancies</h3><p>Every listing shows current availability, the rent and the landlord's own number.</p></div>
-      <div class="feat"><i><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10h18M16 14h2"/></svg></i><h3>Student budgets</h3><p>From shared rooms to full apartments, with something for every pocket.</p></div>
+    <section class="section"><div class="container">
+      <div class="section-head"><div><h2>How Migrate works</h2><p>Three steps from searching to viewing a house.</p></div></div>
+      <ol class="steps">
+        <li><span class="step-n">1</span><h3>Search and filter</h3><p>Filter by rent, house type, bedrooms and distance from campus.</p></li>
+        <li><span class="step-n">2</span><h3>Check the details</h3><p>See photos, the description and the location on the map.</p></li>
+        <li><span class="step-n">3</span><h3>Contact the landlord</h3><p>Call or WhatsApp the landlord directly, then go and view the house.</p></li>
+      </ol>
     </div></section>
 
-    <section class="section band"><div class="container">
-      <div class="section-head"><div><h2>Fresh on Migrate</h2><p>The newest places near campus. More photos are on the way.</p></div><a class="btn btn-outline" href="listings.html">See all houses</a></div>
-      <div class="grid" id="featured"></div>
+    <section class="section band" id="latest"><div class="container">
+      <div class="section-head"><div><h2>Recently added</h2><p>The newest available houses near campus.</p></div><a class="btn btn-outline" href="listings.html">See all houses</a></div>
+      <div class="grid" id="featured" aria-live="polite"></div>
+    </div></section>
+
+    <section class="section"><div class="container two-col">
+      <div class="panel"><h2>For students</h2>
+        <ul class="ticks"><li>One place to compare houses instead of scattered posts and notices</li><li>Rent shown in KES, with house type and bedrooms</li><li>Save houses you like and come back to them</li><li>Straight-line distance from campus on each listing with a map pin</li></ul>
+        <a class="btn" href="signup.html">Create a student account</a></div>
+      <div class="panel panel-dark"><h2>For landlords &amp; agents</h2>
+        <ul class="ticks"><li>List a vacant house with photos in a few minutes</li><li>Students contact you directly by call or WhatsApp</li><li>Mark the house as taken when it is let</li><li>Listings are reviewed by an administrator before they go public</li></ul>
+        <a class="btn btn-amber" href="signup.html">List your house</a></div>
+    </div></section>
+
+    <section class="section trust"><div class="container">
+      <h2>About trust on Migrate</h2>
+      <p>New listings are checked by a Migrate administrator before they appear publicly. This is a moderation review, not a guarantee: Migrate does not independently verify landlords or properties, and it does not handle rent payments. Always view a house in person before you pay anything.</p>
     </div></section>
   </main>
-  <footer class="site-footer"><div class="container">Migrate. Rentals for students of Presbyterian University, Thogoto.</div></footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <footer class="site-footer"><div class="container foot">
+    <div><strong>Migrate</strong><br>Rentals for students of Presbyterian University of East Africa, Thogoto and Kikuyu.</div>
+    <div><a href="listings.html">Browse houses</a> &middot; <a href="signup.html">List a house</a> &middot; <a href="login.html">Log in</a></div>
+  </div></footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0"></script>
+  <script src="js/config.js"></script>
+  <script src="js/lib.js"></script>
   <script src="js/supabaseClient.js"></script>
   <script src="js/nav.js"></script>
-  <script src="js/placeholders.js"></script>
-  <script>
-    const areaSel = document.getElementById("area"), typeSel = document.getElementById("type"), feat = document.getElementById("featured");
-    Object.entries(PROPERTY_TYPES).forEach(([v, l]) => typeSel.insertAdjacentHTML("beforeend", `<option value="${v}">${l}</option>`));
-    const realCard = (p) => `<article class="card"><div class="card-img" style="background-image:url('${encodeURI(p.property_images?.[0]?.image_url || "")}')"></div>
-      <div class="card-body"><div class="price">${formatKES(p.rent)} <small>/ month</small></div><h3>${esc(p.title)}</h3>
-      <div class="meta">${esc(p.area || p.location || "")}</div><div><span class="tag">${esc(PROPERTY_TYPES[p.property_type] || "Rental")}</span></div>
-      <a class="btn" href="property.html?id=${p.id}">View details</a></div></article>`;
-    async function load() {
-      const { data, error } = await db.from("properties").select("id,title,rent,area,location,property_type,property_images(image_url)").eq("status", "Available").order("created_at", { ascending: false });
-      const rows = error ? [] : data;
-      [...new Set(rows.map(p => p.area).filter(Boolean))].sort().forEach(a => areaSel.insertAdjacentHTML("beforeend", `<option value="${esc(a)}">${esc(a)}</option>`));
-      document.getElementById("hero-count").textContent = rows.length ? `${rows.length} ${rows.length === 1 ? "place is" : "places are"} available right now.` : "New listings are coming soon.";
-      const real = rows.filter(p => p.property_images?.length).slice(0, 10);
-      feat.innerHTML = real.map(realCard).join("") + SLOTS.slice(real.length).map((s, i) => placeholderCard(s, real.length + i)).join("");
-    }
-    document.getElementById("search-form").addEventListener("submit", (e) => {
-      e.preventDefault();
-      const p = new URLSearchParams();
-      if (areaSel.value) p.set("area", areaSel.value);
-      if (typeSel.value) p.set("type", typeSel.value);
-      const max = document.getElementById("max-rent").value; if (max) p.set("max", max);
-      location.href = "listings.html" + (p.toString() ? "?" + p : "");
-    });
-    load();
-  </script>
+  <script src="js/cards.js"></script>
+  <script src="js/home.js"></script>
 </body>
 </html>

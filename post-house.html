@@ -3,48 +3,61 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>List your house | Migrate</title>
+  <title>List a house | Migrate</title>
+  <meta name="robots" content="noindex">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header"><div class="container">
     <a class="logo" href="index.html">Migrate</a>
     <nav class="nav" id="nav" aria-label="Main"></nav>
   </div></header>
 
-  <main class="container"><div class="auth-card" style="max-width:680px">
-    <h2>List your house</h2>
-    <p class="meta" style="margin-bottom:1.5rem">Students will see this listing as soon as you post it.</p>
-    <p id="gate" class="msg bad"></p>
-    <form id="post-form">
-      <div class="form-group"><label for="p-title">Title</label><input id="p-title" placeholder="Bright bedsitter near the main gate" required></div>
+  <main class="container" id="main"><div class="auth-card wide">
+    <h1 class="h2" id="page-h">List a house</h1>
+    <p class="meta lead">New listings are reviewed by an administrator before students can see them.</p>
+    <p id="gate" class="notice" role="alert" hidden></p>
+    <form id="post-form" novalidate>
+      <div class="form-group"><label for="p-title">Title</label><input id="p-title" maxlength="120" placeholder="Bright bedsitter near the main gate" required><span class="field-err" id="p-title-err" role="alert"></span></div>
       <div class="row2">
-        <div class="form-group"><label for="p-rent">Rent (KES / month)</label><input type="number" id="p-rent" min="0" step="500" required></div>
-        <div class="form-group"><label for="p-type">Type</label><select id="p-type" required></select></div>
+        <div class="form-group"><label for="p-rent">Monthly rent (KES)</label><input type="number" inputmode="numeric" id="p-rent" min="1" step="100" required><span class="field-err" id="p-rent-err" role="alert"></span></div>
+        <div class="form-group"><label for="p-property_type">House type</label><select id="p-property_type" required><option value="">Choose a type</option></select><span class="field-err" id="p-property_type-err" role="alert"></span></div>
       </div>
       <div class="row2">
-        <div class="form-group"><label for="p-area">Area</label><input id="p-area" placeholder="e.g. Thogoto" required></div>
-        <div class="form-group"><label for="p-location">Landmark or street</label><input id="p-location"></div>
+        <div class="form-group"><label for="p-bedrooms">Bedrooms</label><input type="number" inputmode="numeric" id="p-bedrooms" min="0" step="1" aria-describedby="p-bedrooms-hint" required><span class="hint" id="p-bedrooms-hint">Use 0 for a bedsitter or single room.</span><span class="field-err" id="p-bedrooms-err" role="alert"></span></div>
+        <div class="form-group"><label for="p-contact_phone">Contact phone</label><input type="tel" inputmode="tel" id="p-contact_phone" placeholder="0712345678" required><span class="field-err" id="p-contact_phone-err" role="alert"></span></div>
       </div>
       <div class="row2">
-        <div class="form-group"><label for="p-beds">Bedrooms</label><input type="number" id="p-beds" min="0"></div>
-        <div class="form-group"><label for="p-baths">Bathrooms</label><input type="number" id="p-baths" min="0"></div>
+        <div class="form-group"><label for="p-area">Area / neighbourhood</label><input id="p-area" placeholder="e.g. Thogoto" required><span class="field-err" id="p-area-err" role="alert"></span></div>
+        <div class="form-group"><label for="p-location">Landmark or street <span class="opt">(optional)</span></label><input id="p-location"><span class="field-err" id="p-location-err" role="alert"></span></div>
       </div>
-      <div class="form-group"><label for="p-amen">Amenities (comma separated)</label><input id="p-amen" placeholder="WiFi, Water, Security, Parking"></div>
-      <div class="form-group"><label for="p-phone">Contact phone</label><input type="tel" id="p-phone" placeholder="0712345678" required></div>
-      <div class="form-group"><label for="p-desc">Description</label><textarea id="p-desc" rows="4"></textarea></div>
-      <div class="form-group"><label>Map pin (optional)</label>
-        <div class="row2"><input id="p-lat" type="number" step="any" placeholder="Latitude"><input id="p-lng" type="number" step="any" placeholder="Longitude"></div>
-        <button type="button" class="btn btn-outline" id="p-geo">Use my current location</button></div>
-      <div class="form-group"><label for="p-photos">Photos</label><input type="file" id="p-photos" accept="image/*" multiple></div>
-      <button type="submit" class="btn" style="width:100%">Post listing</button>
-      <p id="post-msg" class="msg" aria-live="polite"></p>
+      <div class="form-group"><label for="p-amenities">Amenities <span class="opt">(comma separated)</span></label><input id="p-amenities" placeholder="WiFi, Water, Security, Parking"></div>
+      <div class="form-group"><label for="p-description">Description</label><textarea id="p-description" rows="5" required></textarea><span class="hint"><span id="desc-count">0 / 1000</span> characters</span><span class="field-err" id="p-description-err" role="alert"></span></div>
+      <fieldset class="form-group"><legend>Map pin <span class="opt">(optional but helps students)</span></legend>
+        <div class="row2"><div><label for="p-latitude">Latitude</label><input id="p-latitude" type="number" step="any" inputmode="decimal" placeholder="-1.2196"></div><div><label for="p-longitude">Longitude</label><input id="p-longitude" type="number" step="any" inputmode="decimal" placeholder="36.6676"></div></div>
+        <span class="field-err" id="p-latitude-err" role="alert"></span>
+        <button type="button" class="btn btn-outline btn-sm" id="p-geo">Use my current location</button>
+      </fieldset>
+      <div class="form-group"><label for="p-photos">Photos</label><input type="file" id="p-photos" accept="image/jpeg,image/png,image/webp" multiple aria-describedby="p-photos-hint"><span class="hint" id="p-photos-hint">JPG, PNG or WebP, up to 5 MB each, maximum 8 photos. The first photo is the cover.</span><span class="field-err" id="p-photos-err" role="alert"></span>
+        <ul class="previews" id="photo-previews"></ul></div>
+      <button type="submit" class="btn btn-block" id="post-submit">Submit listing</button>
+      <p id="post-msg" class="msg" role="status" aria-live="polite"></p>
     </form>
   </div></main>
-  <footer class="site-footer"><div class="container">Migrate. Rentals for students of Presbyterian University, Thogoto.</div></footer>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <footer class="site-footer"><div class="container foot">
+    <div><strong>Migrate</strong><br>Rentals for students of Presbyterian University of East Africa, Thogoto and Kikuyu.</div>
+    <div><a href="dashboard.html">My listings</a> &middot; <a href="listings.html">Browse houses</a></div>
+  </div></footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0"></script>
+  <script src="js/config.js"></script>
+  <script src="js/lib.js"></script>
   <script src="js/supabaseClient.js"></script>
   <script src="js/nav.js"></script>
+  <script src="js/cards.js"></script>
   <script src="js/post-house.js"></script>
 </body>
 </html>

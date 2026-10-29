@@ -4,39 +4,39 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Log in | Migrate</title>
+  <meta name="robots" content="noindex">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header"><div class="container">
     <a class="logo" href="index.html">Migrate</a>
     <nav class="nav" id="nav" aria-label="Main"></nav>
   </div></header>
 
-  <main class="container"><div class="auth-card">
-    <h2>Welcome back</h2>
-    <p class="meta" style="margin-bottom:1.5rem">Log in to see your saved rentals and list a house.</p>
-    <form id="login-form">
-      <div class="form-group"><label for="l-email">Email address</label><input type="email" id="l-email" autocomplete="email" required></div>
-      <div class="form-group"><label for="l-password">Password</label><input type="password" id="l-password" autocomplete="current-password" required></div>
-      <button type="submit" class="btn" style="width:100%">Log in</button>
-      <p id="auth-msg" class="msg" aria-live="polite"></p>
+  <main class="container" id="main"><div class="auth-card">
+    <h1 class="h2">Welcome back</h1>
+    <p class="meta lead">Log in to save houses or manage your listings.</p>
+    <form id="login-form" novalidate>
+      <div class="form-group"><label for="l-email">Email address</label><input type="email" id="l-email" autocomplete="email" required><span class="field-err" id="l-email-err" role="alert"></span></div>
+      <div class="form-group"><label for="l-password">Password</label><input type="password" id="l-password" autocomplete="current-password" required><span class="field-err" id="l-password-err" role="alert"></span></div>
+      <button type="submit" class="btn btn-block">Log in</button>
+      <p id="auth-msg" class="msg" role="status" aria-live="polite"></p>
     </form>
-    <p style="font-size:.95rem">New here? <a href="signup.html">Create an account</a></p>
+    <p class="small">New here? <a href="signup.html">Create an account</a></p>
   </div></main>
-  <footer class="site-footer"><div class="container">Migrate. Rentals for students of Presbyterian University, Thogoto.</div></footer>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <footer class="site-footer"><div class="container foot">
+    <div><strong>Migrate</strong><br>Rentals for students of Presbyterian University of East Africa, Thogoto and Kikuyu.</div>
+    <div><a href="listings.html">Browse houses</a> &middot; <a href="signup.html">Sign up</a></div>
+  </div></footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0"></script>
+  <script src="js/config.js"></script>
+  <script src="js/lib.js"></script>
   <script src="js/supabaseClient.js"></script>
   <script src="js/nav.js"></script>
-  <script>
-    const next = new URLSearchParams(location.search).get("next") || "index.html";
-    document.getElementById("login-form").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const msg = document.getElementById("auth-msg"); msg.className = "msg"; msg.textContent = "Logging in...";
-      const { error } = await db.auth.signInWithPassword({ email: document.getElementById("l-email").value.trim(), password: document.getElementById("l-password").value });
-      if (error) { msg.className = "msg bad"; msg.textContent = error.message; return; }
-      msg.className = "msg ok"; msg.textContent = "Logged in. Redirecting...";
-      setTimeout(() => location.href = next, 600);
-    });
-  </script>
+  <script src="js/auth.js"></script>
 </body>
 </html>

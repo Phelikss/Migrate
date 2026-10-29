@@ -3,52 +3,47 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Sign up | Migrate</title>
+  <title>Create an account | Migrate</title>
+  <meta name="description" content="Join Migrate as a student looking for a house, or as a landlord or agent listing vacant houses near Presbyterian University of East Africa.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header"><div class="container">
     <a class="logo" href="index.html">Migrate</a>
     <nav class="nav" id="nav" aria-label="Main"></nav>
   </div></header>
 
-  <main class="container"><div class="auth-card">
-    <h2>Create an account</h2>
-    <p class="meta" style="margin-bottom:1.5rem">Join Migrate as a student or a landlord.</p>
-    <form id="signup-form">
-      <div class="form-group"><label for="s-name">Full name</label><input id="s-name" autocomplete="name" required></div>
-      <div class="form-group"><label for="s-email">Email address</label><input type="email" id="s-email" autocomplete="email" required></div>
+  <main class="container" id="main"><div class="auth-card">
+    <h1 class="h2">Create an account</h1>
+    <p class="meta lead">Join Migrate as a student or as a landlord / agent.</p>
+    <form id="signup-form" novalidate>
+      <div class="form-group"><label for="s-name">Full name</label><input id="s-name" autocomplete="name" maxlength="60" required><span class="field-err" id="s-name-err" role="alert"></span></div>
+      <div class="form-group"><label for="s-email">Email address</label><input type="email" id="s-email" autocomplete="email" required><span class="field-err" id="s-email-err" role="alert"></span></div>
       <div class="row2">
-        <div class="form-group"><label for="s-phone">Phone number</label><input type="tel" id="s-phone" placeholder="0712345678" required></div>
-        <div class="form-group"><label for="s-role">I am a</label><select id="s-role"><option value="student">Student</option><option value="landlord">Landlord</option></select></div>
+        <div class="form-group"><label for="s-phone">Phone number</label><input type="tel" id="s-phone" inputmode="tel" autocomplete="tel" placeholder="0712345678" required><span class="field-err" id="s-phone-err" role="alert"></span></div>
+        <div class="form-group"><label for="s-role">I am a</label><select id="s-role"><option value="student">Student</option><option value="landlord">Landlord / Agent</option></select><span class="field-err" id="s-role-err" role="alert"></span></div>
       </div>
-      <div class="form-group"><label for="s-uni">University / campus</label><input id="s-uni" value="Presbyterian University" required></div>
-      <div class="form-group"><label for="s-password">Password</label><input type="password" id="s-password" minlength="6" autocomplete="new-password" placeholder="At least 6 characters" required></div>
-      <button type="submit" class="btn" style="width:100%">Create account</button>
-      <p id="auth-msg" class="msg" aria-live="polite"></p>
+      <div class="form-group"><label for="s-password">Password</label><input type="password" id="s-password" autocomplete="new-password" aria-describedby="s-password-hint" required><span class="hint" id="s-password-hint">At least 8 characters.</span><span class="field-err" id="s-password-err" role="alert"></span></div>
+      <div class="form-group"><label for="s-confirm">Confirm password</label><input type="password" id="s-confirm" autocomplete="new-password" required><span class="field-err" id="s-confirm-err" role="alert"></span></div>
+      <button type="submit" class="btn btn-block">Create account</button>
+      <p id="auth-msg" class="msg" role="status" aria-live="polite"></p>
     </form>
-    <p style="font-size:.95rem">Already have an account? <a href="login.html">Log in</a></p>
+    <p class="small">Already have an account? <a href="login.html">Log in</a></p>
+    <p class="small meta">We use your name and phone number only to run your account and, for landlords, to let students contact you about your listings.</p>
   </div></main>
-  <footer class="site-footer"><div class="container">Migrate. Rentals for students of Presbyterian University, Thogoto.</div></footer>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <footer class="site-footer"><div class="container foot">
+    <div><strong>Migrate</strong><br>Rentals for students of Presbyterian University of East Africa, Thogoto and Kikuyu.</div>
+    <div><a href="listings.html">Browse houses</a> &middot; <a href="login.html">Log in</a></div>
+  </div></footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0"></script>
+  <script src="js/config.js"></script>
+  <script src="js/lib.js"></script>
   <script src="js/supabaseClient.js"></script>
   <script src="js/nav.js"></script>
-  <script>
-    document.getElementById("signup-form").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const msg = document.getElementById("auth-msg"); msg.className = "msg"; msg.textContent = "Creating account...";
-      const v = (id) => document.getElementById(id).value.trim();
-      const profile = { full_name: v("s-name"), phone: v("s-phone"), university: v("s-uni"), role: document.getElementById("s-role").value };
-      const { data, error } = await db.auth.signUp({ email: v("s-email"), password: document.getElementById("s-password").value, options: { data: profile } });
-      if (error) { msg.className = "msg bad"; msg.textContent = error.message; return; }
-      // The database trigger creates the profile from the metadata above, so nothing else to insert.
-      if (data.session) {
-        msg.className = "msg ok"; msg.textContent = "Account created. Redirecting...";
-        setTimeout(() => location.href = "index.html", 1000);
-      } else {
-        msg.className = "msg ok"; msg.textContent = "Account created. Check your email to confirm it, then log in.";
-      }
-    });
-  </script>
+  <script src="js/auth.js"></script>
 </body>
 </html>
