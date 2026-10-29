@@ -38,6 +38,15 @@ update public.profiles set role = 'admin' where id = '<auth user uuid>';
 
 Rollback: new columns can be dropped and the previous policies re-created from your backup/dump.
 
+## Browser test (optional)
+
+`tests/e2e/journey.js` drives real Chromium at 360, 768 and 1366 px: listings, combined filters, no-results state, sorting, property page and map, plus no-overflow and no-console-error checks on every page. Supabase calls are **intercepted and answered with fake TEST data**, so it verifies the front end, not the live backend.
+
+```bash
+npm start                                            # terminal 1
+NODE_PATH=$(npm root -g) node tests/e2e/journey.js   # terminal 2 (needs Playwright installed)
+```
+
 ## Database tests
 
 `tests/db/run.sh` applies the migration twice to a throwaway local Postgres (with a Supabase stub) and runs 53 RLS/constraint/storage checks:
@@ -59,4 +68,6 @@ Any static host works (Netlify, Vercel, GitHub Pages). Add a `Sitemap:` line to 
 - Google Maps has not been tested with a real key; the OpenStreetMap fallback is used until one is configured.
 - Distances are straight-line (Haversine), not road distance, and are labelled that way.
 - Listings are moderated but landlords are **not** independently verified; the site makes no verification claim.
-- No sitemap yet (needs the production domain); `supabase-js` is loaded from a pinned CDN version.
+- No sitemap yet (needs the production domain). `supabase-js` 2.118.0 and Leaflet 1.9.4 are self-hosted in `vendor/` (licences included); update them manually.
+- Photos are downscaled in the browser (max 1600 px JPEG) before upload; there are no server-side thumbnails yet.
+- Free-tier Supabase projects pause after inactivity; restore from the dashboard before a demo.

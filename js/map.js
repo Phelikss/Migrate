@@ -20,8 +20,8 @@ const MigrateMap = (function () {
   function loadLeaflet() {
     if (window.L) return Promise.resolve();
     return (lPromise ||= new Promise((res, rej) => {
-      const css = document.createElement("link"); css.rel = "stylesheet"; css.href = "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css"; document.head.appendChild(css);
-      loadScript("https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js").then(res, rej);
+      const css = document.createElement("link"); css.rel = "stylesheet"; css.href = "vendor/leaflet/leaflet.css"; document.head.appendChild(css);
+      loadScript("vendor/leaflet/leaflet.js").then(res, rej);
     }));
   }
   const valid = (p) => Number.isFinite(p.lat) && Number.isFinite(p.lng) && Math.abs(p.lat) <= 90 && Math.abs(p.lng) <= 180;

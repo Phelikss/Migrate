@@ -1,4 +1,20 @@
 // Create or edit a listing (edit mode: post-house.html?edit=<id>).
+// Downscale big phone photos before upload (max 1600 px, JPEG ~82%). Keeps the original if re-encoding would not shrink it
+// or if the browser cannot decode/encode (never blocks a post because of compression).
+async function compressImage(file) {
+  try {
+    if (!window.createImageBitmap || file.size < 250 * 1024) return file;
+    const bmp = await createImageBitmap(file);
+    const scale = Math.min(1, 1600 / Math.max(bmp.width, bmp.height));
+    const c = document.createElement("canvas");
+    c.width = Math.round(bmp.width * scale); c.height = Math.round(bmp.height * scale);
+    const ctx = c.getContext("2d"); ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, c.width, c.height); ctx.drawImage(bmp, 0, 0, c.width, c.height);
+    bmp.close?.();
+    const blob = await new Promise((res) => c.toBlob(res, "image/jpeg", 0.82));
+    return blob && blob.size < file.size ? blob : file;
+  } catch { return file; }
+}
+
 const BUCKET = "property-images";
 const $p = (id) => document.getElementById(id);
 const form = $p("post-form"), msg = $p("post-msg"), gate = $p("gate"), submitBtn = $p("post-submit"), photosEl = $p("p-photos"), previews = $p("photo-previews");
@@ -93,8 +109,10 @@ form.addEventListener("submit", async (e) => {
     }
     // Upload new photos (path is scoped to the user's own folder, which Storage policies enforce).
     for (const [k, f] of picked.entries()) {
-      const path = `${me.user.id}/${propId}/${crypto.randomUUID()}.${f.type === "image/png" ? "png" : f.type === "image/webp" ? "webp" : "jpg"}`;
-      const { error } = await db.storage.from(BUCKET).upload(path, f.file, { contentType: f.type, upsert: false });
+      const body = await compressImage(f.file);
+      const type = body === f.file ? f.type : "image/jpeg";
+      const path = `${me.user.id}/${propId}/${crypto.randomUUID()}.${type === "image/png" ? "png" : type === "image/webp" ? "webp" : "jpg"}`;
+      const { error } = await db.storage.from(BUCKET).upload(path, body, { contentType: type, upsert: false });
       if (error) throw error;
       uploaded.push({ property_id: propId, image_url: db.storage.from(BUCKET).getPublicUrl(path).data.publicUrl, storage_path: path, position: existing.length + k });
     }
