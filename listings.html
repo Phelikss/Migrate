@@ -3,36 +3,66 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Rentals near campus | Migrate</title>
+  <title>Houses to rent near campus | Migrate</title>
+  <meta name="description" content="Browse vacant bedsitters, single rooms and apartments near Presbyterian University of East Africa in Thogoto and Kikuyu. Filter by rent, type, bedrooms and distance.">
+  <link rel="canonical" href="listings.html">
+  <meta property="og:title" content="Houses to rent near campus | Migrate">
+  <meta property="og:description" content="Vacant houses near Presbyterian University of East Africa, with rent in KES and landlord contacts.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap">
   <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header"><div class="container">
     <a class="logo" href="index.html">Migrate</a>
     <nav class="nav" id="nav" aria-label="Main"></nav>
   </div></header>
 
-  <main class="container">
+  <main class="container" id="main">
     <div class="page-head">
-      <h1 style="font-size:clamp(1.8rem,4vw,2.6rem)">Rentals near campus</h1>
-      <p class="meta" id="result-count" aria-live="polite">Loading listings...</p>
+      <h1 class="page-title">Houses to rent near campus</h1>
+      <p class="meta" id="result-count" aria-live="polite">Loading houses...</p>
     </div>
-    <form class="filters" id="filters">
-      <label>Area <select id="f-area"><option value="">All areas</option></select></label>
-      <label>Type <select id="f-type"><option value="">Any type</option></select></label>
-      <label>Max rent <input id="f-max" type="number" min="0" step="500" placeholder="KES"></label>
-      <label>Sort <select id="f-sort"><option value="new">Newest</option><option value="low">Rent: low to high</option><option value="high">Rent: high to low</option></select></label>
-      <button type="button" id="toggle-map-btn" class="btn btn-outline">View on map</button>
+
+    <form class="filters" id="filters" role="search" aria-label="Search and filter houses">
+      <label class="f-wide">Search<input id="f-q" type="search" placeholder="Title, area or description" autocomplete="off"></label>
+      <button type="button" id="toggle-filters" class="btn btn-outline f-toggle" aria-expanded="false" aria-controls="filter-extra">Filters</button>
+      <div class="f-extra" id="filter-extra">
+      <label>Min rent (KES)<input id="f-min" type="number" inputmode="numeric" min="0" step="500" placeholder="0"></label>
+      <label>Max rent (KES)<input id="f-max" type="number" inputmode="numeric" min="0" step="500" placeholder="e.g. 8000"></label>
+      <label>House type<select id="f-type"><option value="">Any type</option></select></label>
+      <label>Bedrooms<select id="f-beds"><option value="">Any</option><option value="0">None (bedsitter, single room)</option><option value="1">1</option><option value="2">2</option><option value="3+">3 or more</option></select></label>
+      <label>Distance from campus<select id="f-km"><option value="">Any distance</option><option value="1">Within 1 km</option><option value="2">Within 2 km</option><option value="3">Within 3 km</option><option value="5">Within 5 km</option></select></label>
+      <label>Sort by<select id="f-sort"><option value="new">Newest</option><option value="low">Rent: low to high</option><option value="high">Rent: high to low</option><option value="near">Nearest to campus</option></select></label>
+      </div>
+      <div class="f-actions">
+        <button type="reset" class="btn btn-outline">Reset</button>
+        <button type="button" id="toggle-map-btn" class="btn btn-outline" aria-expanded="false" aria-controls="listings-map">Show map</button>
+      </div>
     </form>
-    <div id="listings-map" style="display:none"></div>
+    <p class="meta small">Distances are straight-line from campus, not walking or driving distance. Houses without a map pin never match a distance filter.</p>
+    <div id="active-filters" class="chips" aria-live="polite"></div>
+
+    <p id="map-note" class="meta" hidden aria-live="polite"></p>
+    <div id="listings-map" class="map" hidden role="region" aria-label="Map of houses"></div>
+
     <div class="grid" id="grid"></div>
+    <div class="center"><button id="load-more" class="btn btn-outline" hidden>Show more</button></div>
   </main>
-  <footer class="site-footer"><div class="container">Migrate. Rentals for students of Presbyterian University, Thogoto.</div></footer>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <footer class="site-footer"><div class="container foot">
+    <div><strong>Migrate</strong><br>Rentals for students of Presbyterian University of East Africa, Thogoto and Kikuyu.</div>
+    <div><a href="listings.html">Browse houses</a> &middot; <a href="signup.html">List a house</a> &middot; <a href="login.html">Log in</a></div>
+  </div></footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0"></script>
+  <script src="js/config.js"></script>
+  <script src="js/lib.js"></script>
   <script src="js/supabaseClient.js"></script>
   <script src="js/nav.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="js/map.js"></script>
+  <script src="js/cards.js"></script>
   <script src="js/listings.js"></script>
 </body>
 </html>

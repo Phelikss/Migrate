@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin | Migrate</title>
+  <meta name="robots" content="noindex, nofollow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header"><div class="container">
+    <a class="logo" href="index.html">Migrate</a>
+    <nav class="nav" id="nav" aria-label="Main"></nav>
+  </div></header>
+
+  <main class="container" id="main">
+    <p id="gate" class="notice" role="alert" hidden></p>
+    <div id="admin-body">
+      <div class="page-head"><h1 class="page-title">Moderation</h1><p class="meta">Review listings before students see them. Approved listings are public; pending, flagged and rejected ones are not.</p></div>
+      <div class="tablist" role="tablist" aria-label="Admin sections">
+        <button role="tab" class="tab" data-tab="listings" aria-selected="true" aria-controls="panel-listings">Listings</button>
+        <button role="tab" class="tab" data-tab="users" aria-selected="false" aria-controls="panel-users">Users</button>
+      </div>
+      <section id="panel-listings" role="tabpanel">
+        <div class="chips" role="group" aria-label="Filter by moderation status">
+          <button class="chip" data-filter="pending" aria-pressed="true">Pending <span class="n">0</span></button>
+          <button class="chip" data-filter="approved" aria-pressed="false">Approved <span class="n">0</span></button>
+          <button class="chip" data-filter="flagged" aria-pressed="false">Flagged <span class="n">0</span></button>
+          <button class="chip" data-filter="rejected" aria-pressed="false">Rejected <span class="n">0</span></button>
+          <button class="chip" data-filter="all" aria-pressed="false">All <span class="n">0</span></button>
+        </div>
+        <div id="mod-list" class="rows" aria-live="polite"></div>
+      </section>
+      <section id="panel-users" role="tabpanel" hidden><div id="user-list"></div></section>
+    </div>
+  </main>
+  <footer class="site-footer"><div class="container foot">
+    <div><strong>Migrate</strong><br>Administration</div>
+    <div><a href="listings.html">Public site</a></div>
+  </div></footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0"></script>
+  <script src="js/config.js"></script>
+  <script src="js/lib.js"></script>
+  <script src="js/supabaseClient.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/cards.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /dashboard.html
+Disallow: /admin.html
+Disallow: /post-house.html
+Disallow: /favorites.html
+Disallow: /login.html
+# Add a Sitemap: line with your real domain once deployed, e.g. Sitemap: https://example.com/sitemap.xml

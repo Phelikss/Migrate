@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My listings | Migrate</title>
+  <meta name="robots" content="noindex, nofollow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header"><div class="container">
+    <a class="logo" href="index.html">Migrate</a>
+    <nav class="nav" id="nav" aria-label="Main"></nav>
+  </div></header>
+
+  <main class="container" id="main">
+    <p id="gate" class="notice" role="alert" hidden></p>
+    <div id="dash-body">
+      <div class="page-head head-row">
+        <div><h1 class="page-title">My listings</h1><p class="meta">Manage the houses you have listed.</p></div>
+        <a class="btn" href="post-house.html">Post a house</a>
+      </div>
+      <div class="stats" id="stats" aria-label="Listing summary"></div>
+      <div id="my-listings" class="rows" aria-live="polite"></div>
+    </div>
+  </main>
+  <footer class="site-footer"><div class="container foot">
+    <div><strong>Migrate</strong><br>Rentals for students of Presbyterian University of East Africa, Thogoto and Kikuyu.</div>
+    <div><a href="listings.html">Browse houses</a> &middot; <a href="post-house.html">Post a house</a></div>
+  </div></footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0"></script>
+  <script src="js/config.js"></script>
+  <script src="js/lib.js"></script>
+  <script src="js/supabaseClient.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/cards.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

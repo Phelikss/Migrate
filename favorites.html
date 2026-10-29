@@ -3,26 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Saved rentals | Migrate</title>
+  <title>My favourites | Migrate</title>
+  <meta name="robots" content="noindex">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header"><div class="container">
     <a class="logo" href="index.html">Migrate</a>
     <nav class="nav" id="nav" aria-label="Main"></nav>
   </div></header>
 
-  <main class="container">
+  <main class="container" id="main">
     <div class="page-head">
-      <h1 style="font-size:clamp(1.8rem,4vw,2.6rem)">My saved rentals</h1>
-      <p class="meta" id="fav-count" aria-live="polite">Loading saved listings...</p>
+      <h1 class="page-title">My favourites</h1>
+      <p class="meta" id="fav-count" aria-live="polite">Loading your favourites...</p>
     </div>
     <div class="grid" id="fav-grid"></div>
   </main>
-  <footer class="site-footer"><div class="container">Migrate. Rentals for students of Presbyterian University, Thogoto.</div></footer>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <footer class="site-footer"><div class="container foot">
+    <div><strong>Migrate</strong><br>Rentals for students of Presbyterian University of East Africa, Thogoto and Kikuyu.</div>
+    <div><a href="listings.html">Browse houses</a> &middot; <a href="login.html">Log in</a></div>
+  </div></footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0"></script>
+  <script src="js/config.js"></script>
+  <script src="js/lib.js"></script>
   <script src="js/supabaseClient.js"></script>
   <script src="js/nav.js"></script>
+  <script src="js/cards.js"></script>
   <script src="js/favorites.js"></script>
 </body>
 </html>

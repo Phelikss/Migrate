@@ -1,31 +1,34 @@
 const favGrid = document.getElementById("fav-grid"), favCount = document.getElementById("fav-count");
 
 async function loadFavorites() {
-  const { data: { user } } = await db.auth.getUser();
-  if (!user) { favCount.textContent = ""; favGrid.innerHTML = `<div class="empty"><p>Please <a href="login.html">log in</a> to see your saved rentals.</p></div>`; return; }
+  const me = await getMe();
+  if (!me.user) { location.replace("login.html?next=favorites.html"); return; }
+  if (me.role !== "student") { favCount.textContent = ""; favGrid.innerHTML = `<div class="empty"><p>Favourites are for student accounts.</p><a class="btn" href="listings.html">Browse houses</a></div>`; return; }
 
+  favGrid.setAttribute("aria-busy", "true");
   const { data: favs, error } = await db.from("favorites")
-    .select("id, properties:property_id(id, title, rent, location, area, property_images(image_url))")
-    .eq("user_id", user.id);
-  if (error) { favCount.textContent = ""; favGrid.innerHTML = `<p class="error">Couldn't load saved rentals. Refresh to try again.</p>`; return; }
+    .select("property_id, created_at, properties:property_id(id,title,rent,location,area,property_type,bedrooms,amenities,latitude,longitude,status,moderation_status,property_images(image_url,position))")
+    .eq("user_id", me.user.id).order("created_at", { ascending: false });
+  favGrid.removeAttribute("aria-busy");
+  if (error) { favCount.textContent = ""; favGrid.innerHTML = `<div class="error"><p>Couldn't load your favourites. ${esc(friendlyError(error))}</p><button class="btn btn-outline" onclick="location.reload()">Try again</button></div>`; return; }
 
-  const rows = (favs || []).filter((f) => f.properties);
-  if (!rows.length) { favCount.textContent = "0 saved places"; favGrid.innerHTML = `<div class="empty"><p>Nothing saved yet. <a href="listings.html">Browse rentals near campus</a>.</p></div>`; return; }
-  favCount.textContent = `${rows.length} saved ${rows.length === 1 ? "place" : "places"}`;
+  if (!favs.length) { favCount.textContent = "0 saved houses"; favGrid.innerHTML = `<div class="empty"><h2>Nothing saved yet</h2><p>Tap the heart on a house to keep it here.</p><a class="btn" href="listings.html">Browse houses near campus</a></div>`; return; }
+  favCount.textContent = `${favs.length} saved ${favs.length === 1 ? "house" : "houses"}`;
 
-  favGrid.innerHTML = rows.map(({ id, properties: p }) => {
-    const img = p.property_images?.[0]?.image_url;
-    const photo = img ? `<div class="card-img" style="background-image:url('${encodeURI(img)}')" role="img" aria-label="${esc(p.title)}"></div>` : `<div class="card-img">No photo yet</div>`;
-    return `<article class="card">${photo}<div class="card-body">
-      <div class="price">${p.rent != null ? formatKES(p.rent) : ""} <small>/ month</small></div>
-      <h3>${esc(p.title)}</h3><div class="meta">${esc(p.area || p.location || "")}</div>
-      <a class="btn" href="property.html?id=${p.id}">View details</a>
-      <button class="btn btn-outline" data-remove="${id}">Remove</button></div></article>`;
+  favGrid.innerHTML = favs.map((f) => {
+    const p = f.properties;
+    const rm = `<button type="button" class="btn btn-outline btn-sm" data-remove="${esc(f.property_id)}">Remove</button>`;
+    if (!p) return `<article class="card is-gone"><div class="card-body"><h3>No longer available</h3><p class="meta">This house was removed or is no longer public.</p>${rm}</div></article>`;
+    return cardHTML(p, { extra: `<div class="card-actions">${rm}</div>` });
   }).join("");
 }
+
 favGrid.addEventListener("click", async (e) => {
-  const id = e.target.dataset.remove; if (!id) return;
-  const { error } = await db.from("favorites").delete().eq("id", id);
-  if (!error) loadFavorites();
+  const b = e.target.closest("[data-remove]"); if (!b) return;
+  b.disabled = true;
+  const r = await setFavourite(b.dataset.remove, false);
+  if (!r.ok) { b.disabled = false; toast(r.message, true); return; }
+  toast("Removed from favourites.");
+  loadFavorites();
 });
 loadFavorites();
