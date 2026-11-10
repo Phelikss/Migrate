@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/jpeg" href="images/pic.jpeg">
   <title>Log in | Migrate</title>
   <meta name="robots" content="noindex">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,21 +18,62 @@
     <nav class="nav" id="nav" aria-label="Main"></nav>
   </div></header>
 
-  <main class="container" id="main"><div class="auth-card">
+  <main class="container" id="main">
+    <div class="auth-card">
     <h1 class="h2">Welcome back</h1>
-    <p class="meta lead">Log in to save houses or manage your listings.</p>
+    <p class="meta lead">
+      Log in to save houses or manage your listings.
+    </p>
     <form id="login-form" novalidate>
-      <div class="form-group"><label for="l-email">Email address</label><input type="email" id="l-email" autocomplete="email" required><span class="field-err" id="l-email-err" role="alert"></span></div>
-      <div class="form-group"><label for="l-password">Password</label><input type="password" id="l-password" autocomplete="current-password" required><span class="field-err" id="l-password-err" role="alert"></span></div>
-      <button type="submit" class="btn btn-block">Log in</button>
-      <p id="auth-msg" class="msg" role="status" aria-live="polite"></p>
+      <div class="form-group">
+        <label for="l-email">Email address</label>
+        <input 
+             type="email"
+              id="l-email"
+               autocomplete="email" 
+               required>
+               <span class="field-err" 
+               id="l-email-err" 
+               role="alert">
+              </span>
+        </div>
+        
+      <div class="form-group">
+        <label for="l-password">Password</label>
+        <input type="password" 
+        id="l-password" 
+        autocomplete="current-password" 
+        required>
+        <span class="field-err"
+         id="l-password-err" 
+         role="alert"></span>
+        </div>
+      <button type="submit" 
+      class="btn btn-block">Log in</button>
+      <p id="auth-msg" 
+      class="msg" 
+      role="status" 
+      aria-live="polite">
+    </p>
     </form>
     <p class="small">New here? <a href="signup.html">Create an account</a></p>
-  </div></main>
-  <footer class="site-footer"><div class="container foot">
-    <div><strong>Migrate</strong><br>Rentals for students of Presbyterian University of East Africa, Thogoto and Kikuyu.</div>
-    <div><a href="listings.html">Browse houses</a> &middot; <a href="signup.html">Sign up</a></div>
-  </div></footer>
+  </div>
+</main>
+
+  <footer class="site-footer">
+    <div class="container foot">
+    <div>
+      <strong>Migrate</strong>
+      <br>
+      Rentals for students of Presbyterian University of East Africa, Thogoto and Kikuyu.
+    </div>
+    <div>
+      <a href="listings.html">Browse houses</a>
+       &middot;
+        <a href="signup.html">Sign up</a>
+      </div>
+  </div>
+</footer>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0"></script>
   <script src="js/config.js"></script>
   <script src="js/lib.js"></script>

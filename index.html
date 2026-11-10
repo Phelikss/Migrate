@@ -1,88 +1,248 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Migrate | Find your next digs near campus</title>
-  <meta name="description" content="Find vacant bedsitters, single rooms and apartments near Presbyterian University of East Africa in Thogoto and Kikuyu. Real rent in KES and direct landlord contacts.">
-  <link rel="canonical" href="index.html">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Migrate | Find your next digs near campus">
-  <meta property="og:description" content="Vacant houses near Presbyterian University of East Africa, Thogoto and Kikuyu.">
-  <meta property="og:image" content="images/hero.jpg">
-  <link rel="preload" as="image" href="images/hero.jpg" fetchpriority="high">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Migrate | Find your home near campus</title>
+
+    <meta name="description" content="Find vacant bedsitters, single rooms and apartments near Presbyterian University of East Africa in Thogoto and Kikuyu. Real rent in KES and direct landlord contacts.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="images/pic.jpeg">
+
+    <!-- SEO -->
+    <link rel="canonical" href="index.html">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Migrate | Find your home near campus">
+    <meta property="og:description" content="Vacant houses near Presbyterian University of East Africa, Thogoto and Kikuyu.">
+    <meta property="og:image" content="images/hero.jpg">
+
+    <!-- Performance -->
+    <link rel="preload" as="image" href="images/hero.jpg" fetchpriority="high">
+
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap">
-  <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap"
+    >
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
 </head>
+
 <body>
-  <a class="skip-link" href="#main">Skip to content</a>
-  <header class="site-header"><div class="container">
-    <a class="logo" href="index.html">Migrate</a>
-    <nav class="nav" id="nav" aria-label="Main"></nav>
-  </div></header>
 
-  <main id="main">
-    <section class="hero"><div class="container">
-      <div>
-        <span class="pill">Thogoto &amp; Kikuyu</span>
-        <h1>Find your next digs near campus.</h1>
-        <p>Migrate lists vacant houses around Presbyterian University of East Africa. Compare rent in KES, see photos and the location on a map, and contact the landlord directly.</p>
-        <a class="btn btn-lg" href="listings.html">Browse available houses &rarr;</a>
-      </div>
-      <img class="hero-photo" src="images/hero.jpg" alt="A furnished room" width="736" height="981" fetchpriority="high">
-    </div></section>
+    <!-- Skip Navigation -->
+    <a class="skip-link" href="#main">Skip to content</a>
 
-    <div class="container finder">
-      <form class="search-bar" id="search-form" role="search" aria-label="Find a house">
-        <label>Search<input id="q" type="search" placeholder="Area or keyword" autocomplete="off"></label>
-        <label>House type<select id="type"><option value="">Any type</option></select></label>
-        <label>Max rent (KES / month)<input id="max-rent" type="number" inputmode="numeric" min="0" step="500" placeholder="e.g. 8000"></label>
-        <button class="btn" type="submit">Search</button>
-      </form>
-    </div>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container">
 
-    <section class="section"><div class="container">
-      <div class="section-head"><div><h2>How Migrate works</h2><p>Three steps from searching to viewing a house.</p></div></div>
-      <ol class="steps">
-        <li><span class="step-n">1</span><h3>Search and filter</h3><p>Filter by rent, house type, bedrooms and distance from campus.</p></li>
-        <li><span class="step-n">2</span><h3>Check the details</h3><p>See photos, the description and the location on the map.</p></li>
-        <li><span class="step-n">3</span><h3>Contact the landlord</h3><p>Call or WhatsApp the landlord directly, then go and view the house.</p></li>
-      </ol>
-    </div></section>
+            <a class="logo" href="index.html">Migrate</a>
 
-    <section class="section band" id="latest"><div class="container">
-      <div class="section-head"><div><h2>Recently added</h2><p>The newest available houses near campus.</p></div><a class="btn btn-outline" href="listings.html">See all houses</a></div>
-      <div class="grid" id="featured" aria-live="polite"></div>
-    </div></section>
+            <nav class="nav" id="nav" aria-label="Main"></nav>
 
-    <section class="section"><div class="container two-col">
-      <div class="panel"><h2>For students</h2>
-        <ul class="ticks"><li>One place to compare houses instead of scattered posts and notices</li><li>Rent shown in KES, with house type and bedrooms</li><li>Save houses you like and come back to them</li><li>Straight-line distance from campus on each listing with a map pin</li></ul>
-        <a class="btn" href="signup.html">Create a student account</a></div>
-      <div class="panel panel-dark"><h2>For landlords &amp; agents</h2>
-        <ul class="ticks"><li>List a vacant house with photos in a few minutes</li><li>Students contact you directly by call or WhatsApp</li><li>Mark the house as taken when it is let</li><li>Listings are reviewed by an administrator before they go public</li></ul>
-        <a class="btn btn-amber" href="signup.html">List your house</a></div>
-    </div></section>
+        </div>
+    </header>
 
-    <section class="section trust"><div class="container">
-      <h2>About trust on Migrate</h2>
-      <p>New listings are checked by a Migrate administrator before they appear publicly. This is a moderation review, not a guarantee: Migrate does not independently verify landlords or properties, and it does not handle rent payments. Always view a house in person before you pay anything.</p>
-    </div></section>
-  </main>
+    <main id="main">
 
-  <footer class="site-footer"><div class="container foot">
-    <div><strong>Migrate</strong><br>Rentals for students of Presbyterian University of East Africa, Thogoto and Kikuyu.</div>
-    <div><a href="listings.html">Browse houses</a> &middot; <a href="signup.html">List a house</a> &middot; <a href="login.html">Log in</a></div>
-  </div></footer>
+        <section class="hero">
+            <div class="container">
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0"></script>
-  <script src="js/config.js"></script>
-  <script src="js/lib.js"></script>
-  <script src="js/supabaseClient.js"></script>
-  <script src="js/nav.js"></script>
-  <script src="js/cards.js"></script>
-  <script src="js/home.js"></script>
+                <div>
+                    <span class="pill">Thogoto &amp; Kikuyu</span>
+
+                    <h1>Find your next digs near campus.</h1>
+
+                    <p>
+                        Migrate lists vacant houses around Presbyterian University
+                        of East Africa. Compare rent in KES, see photos and the
+                        location on a map, and contact the landlord directly.
+                    </p>
+
+                    <a class="btn btn-lg" href="listings.html">
+                        Browse available houses &rarr;
+                    </a>
+                </div>
+
+                <img
+                    class="hero-photo"
+                    src="images/hero.jpg"
+                    alt="A furnished room"
+                    width="736"
+                    height="981"
+                    fetchpriority="high"
+                >
+
+            </div>
+        </section>
+
+        <div class="container finder">
+
+            <form
+                class="search-bar"
+                id="search-form"
+                role="search"
+                aria-label="Find a house"
+            >
+
+                <label>
+                    Search
+                    <input
+                        id="q"
+                        type="search"
+                        placeholder="Area or keyword"
+                        autocomplete="off"
+                    >
+                </label>
+
+                <label>
+                    House type
+                    <select id="type">
+                        <option value="">Any type</option>
+                    </select>
+                </label>
+
+                <label>
+                    Max rent (KES / month)
+                    <input
+                        id="max-rent"
+                        type="number"
+                        inputmode="numeric"
+                        min="0"
+                        step="500"
+                        placeholder="e.g. 8000"
+                    >
+                </label>
+
+                <button class="btn" type="submit">Search</button>
+
+            </form>
+        </div>
+
+        <section class="section">
+            <div class="container">
+
+                <div class="section-head">
+                    <div>
+                        <h2>How Migrate works</h2>
+                        <p>Three steps from searching to viewing a house.</p>
+                    </div>
+                </div>
+
+                <ol class="steps">
+
+                    <li>
+                        <span class="step-n">1</span>
+                        <h3>Search and filter</h3>
+                        <p>
+                            Filter by rent, house type, bedrooms and distance
+                            from campus.
+                        </p>
+                    </li>
+
+                    <li>
+                        <span class="step-n">2</span>
+                        <h3>Check the details</h3>
+                        <p>
+                            See photos, the description and the location
+                            on the map.
+                        </p>
+                    </li>
+
+                    <li>
+                        <span class="step-n">3</span>
+                        <h3>Contact the landlord</h3>
+                        <p>
+                            Call or WhatsApp the landlord directly, then
+                            go and view the house.
+                        </p>
+                    </li>
+
+                </ol>
+
+            </div>
+        </section>
+
+        <section class="section band" id="latest">
+            <div class="container">
+
+                <div class="section-head">
+                    <div>
+                        <h2>Recently added</h2>
+                        <p>The newest available houses near campus.</p>
+                    </div>
+                    <a class="btn btn-outline" href="listings.html">See all houses</a>
+                </div>
+
+                <div class="grid" id="featured" aria-live="polite"></div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container two-col">
+                <div class="panel">
+                    <h2>For students</h2>
+                    <ul class="ticks">
+                        <li>One place to compare houses instead of scattered posts and notices</li>
+                        <li>Rent shown in KES, with house type and bedrooms</li>
+                        <li>Save houses you like and come back to them</li>
+                        <li>Straight-line distance from campus on each listing with a map pin</li>
+                    </ul>
+                    <a class="btn" href="signup.html">Create a student account</a>
+                </div>
+                <div class="panel panel-dark">
+                    <h2>For landlords &amp; agents</h2>
+                    <ul class="ticks">
+                        <li>List a vacant house with photos in a few minutes</li>
+                        <li>Students contact you directly by call or WhatsApp</li>
+                        <li>Mark the house as taken when it is let</li>
+                        <li>Listings are reviewed by an administrator before they go public</li>
+                    </ul>
+                    <a class="btn btn-amber" href="signup.html">List your house</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section trust">
+            <div class="container">
+                <h2>About trust on Migrate</h2>
+                <p>New listings are checked by a Migrate administrator before they appear publicly. This is a moderation review, not a guarantee: Migrate does not independently verify landlords or properties, and it does not handle rent payments. Always view a house in person before you pay anything.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container foot">
+            <div><strong>Migrate</strong><br>Rentals for students of Presbyterian University of East Africa, Thogoto and Kikuyu.</div>
+            <div>
+                <a href="listings.html">Browse houses</a> &middot;
+                <a href="About.html">About</a> &middot;
+                <a href="signup.html">List a house</a> &middot;
+                <a href="login.html">Log in</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0"></script>
+    <script src="js/config.js"></script>
+    <script src="js/lib.js"></script>
+    <script src="js/supabaseClient.js"></script>
+    <script src="js/nav.js"></script>
+    <script src="js/cards.js"></script>
+    <script src="js/home.js"></script>
 </body>
 </html>

@@ -4,7 +4,7 @@
   if (!nav) return;
   const page = location.pathname.split("/").pop() || "index.html";
   const link = (h, t, c = "") => `<a href="${h}" class="${c}"${page === h ? ' aria-current="page"' : ""}>${t}</a>`;
-  const publicLinks = link("index.html", "Home") + link("listings.html", "Browse houses");
+  const publicLinks = link("index.html", "Home") + link("listings.html", "Browse houses") + link("About.html", "About");
   const render = (inner) => {
     nav.innerHTML = `<button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Menu"><span></span></button><div class="nav-links" id="nav-links">${inner}</div>`;
     const t = document.getElementById("nav-toggle");

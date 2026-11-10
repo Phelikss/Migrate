@@ -2,10 +2,36 @@
 // These are NOT real-browser tests; they catch wiring/logic bugs, not CSS/layout/network issues.
 const test = require("node:test");
 const assert = require("node:assert/strict");
+const fs = require("node:fs");
+const path = require("node:path");
 const { loadPage, fixtures, text, U } = require("./helpers/dom");
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const titles = (d, sel = "#grid h3") => [...d.querySelectorAll(sel)].map(text).sort();
+
+test("every page uses the supplied JPEG favicon", () => {
+  const root = path.resolve(__dirname, "..");
+  const pages = fs.readdirSync(root).filter((file) => file.endsWith(".html"));
+  assert.ok(pages.length > 0, "HTML pages exist");
+  for (const page of pages) {
+    const html = fs.readFileSync(path.join(root, page), "utf8");
+    assert.match(html, /<link rel="icon" type="image\/jpeg" href="images\/pic\.jpeg">/, `${page} declares the favicon`);
+  }
+  assert.ok(fs.existsSync(path.join(root, "images", "pic.jpeg")), "favicon image exists");
+});
+
+test("about page explains the service and links to listings and sign-up", async () => {
+  const root = path.resolve(__dirname, "..");
+  const p = await loadPage("About.html");
+  assert.match(text(p.d.querySelector("main")), /helps students.*find available rentals/i);
+  assert.ok(p.d.querySelector('main a[href="listings.html"]'));
+  assert.ok(p.d.querySelector('main a[href="signup.html"]'));
+  assert.ok(p.d.querySelector('#nav a[href="About.html"]'));
+  assert.match(fs.readFileSync(path.join(root, "index.html"), "utf8"), /<nav class="nav" id="nav" aria-label="Main"><\/nav>/);
+  assert.equal(p.errors.length, 0, String(p.errors[0]));
+  p.close();
+});
+
 async function listings(opts) {
   const p = await loadPage("listings.html", opts);
   await p.settle(() => p.d.querySelectorAll("#grid .card:not(.skeleton)").length > 0 || p.d.querySelector("#grid .empty, #grid .error"));
@@ -298,7 +324,7 @@ test("post form: students are blocked; landlords get field errors and nothing is
 });
 
 test("no page threw an uncaught error while loading", async () => {
-  for (const [f, o] of [["index.html", {}], ["listings.html", {}], ["login.html", {}], ["signup.html", {}], ["favorites.html", { user: U.student }], ["dashboard.html", { user: U.landlord }], ["admin.html", { user: U.admin }], ["post-house.html", { user: U.landlord }], ["property.html", { search: "?id=p1" }]]) {
+  for (const [f, o] of [["index.html", {}], ["listings.html", {}], ["About.html", {}], ["login.html", {}], ["signup.html", {}], ["favorites.html", { user: U.student }], ["dashboard.html", { user: U.landlord }], ["admin.html", { user: U.admin }], ["post-house.html", { user: U.landlord }], ["property.html", { search: "?id=p1" }]]) {
     const p = await loadPage(f, o); await sleep(250);
     assert.equal(p.errors.length, 0, `${f}: ${p.errors[0]}`);
     assert.ok(p.d.getElementById("nav").innerHTML.length > 0, `${f}: nav rendered`);
@@ -308,8 +334,23 @@ test("no page threw an uncaught error while loading", async () => {
 
 test("nav is role-aware (convenience only; the database enforces access)", async () => {
   const nav = async (user) => { const p = await loadPage("index.html", { user }); await p.settle(() => !user || p.d.getElementById("logout")); return text(p.d.getElementById("nav")); };
-  assert.match(await nav(null), /Log in/); assert.doesNotMatch(await nav(null), /Admin|My listings|Post a house/);
+  assert.match(await nav(null), /Log in/); assert.match(await nav(null), /About/); assert.doesNotMatch(await nav(null), /Admin|My listings|Post a house/);
   const s = await nav(U.student); assert.match(s, /Favourites/); assert.doesNotMatch(s, /Admin|Post a house|My listings/);
   const l = await nav(U.landlord); assert.match(l, /My listings/); assert.match(l, /Post a house/); assert.doesNotMatch(l, /Admin|Favourites/);
   assert.match(await nav(U.admin), /Admin/);
+  const about = await loadPage("About.html");
+  assert.equal(about.d.querySelector('#nav a[href="About.html"]').getAttribute("aria-current"), "page");
+  about.close();
+});
+
+test("nav menu opens and Escape closes it", async () => {
+  const p = await loadPage("index.html");
+  const nav = p.d.getElementById("nav"), toggle = p.d.getElementById("nav-toggle");
+  toggle.click();
+  assert.ok(nav.classList.contains("open"));
+  assert.equal(toggle.getAttribute("aria-expanded"), "true");
+  nav.dispatchEvent(new p.w.KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
+  assert.ok(!nav.classList.contains("open"));
+  assert.equal(toggle.getAttribute("aria-expanded"), "false");
+  p.close();
 });
