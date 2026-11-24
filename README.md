@@ -1,5 +1,7 @@
 # Migrate
 
+[![CI](https://github.com/Phelikss/Migrate/actions/workflows/ci.yml/badge.svg)](https://github.com/Phelikss/Migrate/actions/workflows/ci.yml)
+
 A web-based rental listing platform connecting students of **Presbyterian University of East Africa** to vacant houses in **Thogoto and Kikuyu**, Kenya. Students browse, filter, save favourites and contact landlords; landlords and agents post and manage listings; administrators moderate. Payments, leases and in-app chat are out of scope for the first release.
 
 ## Stack
@@ -25,6 +27,33 @@ npm test           # 37 page/logic tests (jsdom + in-memory fake Supabase)
 | Campus coordinates | `js/config.js` → `CAMPUS` | Public. Verify against the real gate location |
 
 Never put the Supabase **service-role** key in this repository or in any browser file. If it was ever committed, rotate it.
+
+## Architecture
+
+```
+Browser (static HTML/CSS/vanilla JS)
+   |  supabase-js (publishable key)
+   v
+Supabase: Auth -> Postgres (RLS policies, triggers, constraints) -> Storage (property-images)
+```
+
+- `js/lib.js` holds pure, unit-tested logic (validation, filtering, distance).
+- `js/<page>.js` wires one page each; shared pieces live in `cards.js`, `nav.js`, `map.js`.
+- `supabase/migrations/` is the single source of truth for the schema and security rules.
+- `tests/` runs page tests in jsdom against an in-memory fake Supabase, plus SQL tests for RLS (`tests/db`).
+
+### Key decisions
+
+- **No framework, no build step.** The app is a handful of server-less pages; plain JS keeps hosting free and onboarding instant. Revisit if shared state grows.
+- **Security in the database.** Every rule that matters (who can edit a listing, who can promote a user) lives in RLS and triggers so a modified client gains nothing.
+- **Moderation before publication.** New listings start as pending and are only public once an admin approves them.
+
+## Roadmap
+
+- End-to-end browser tests against a staging Supabase project
+- Landlord verification workflow
+- Road-distance estimates instead of straight-line
+- Sitemap and production deployment
 
 ## Database
 
