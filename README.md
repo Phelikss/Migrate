@@ -15,7 +15,7 @@ Prerequisites: Node 18+.
 ```bash
 npm install        # dev dependency only: jsdom, used by the tests
 npm start          # static dev server on http://localhost:8080
-npm test           # 37 page/logic tests (jsdom + in-memory fake Supabase)
+npm test           # 40 page/logic tests (jsdom + in-memory fake Supabase)
 ```
 
 ## Configuration
